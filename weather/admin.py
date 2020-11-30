@@ -7,5 +7,5 @@ class WeatherImageInline(admin.TabularInline):
 
 @admin.register(Weather)
 class WeatherAdmin(admin.ModelAdmin):
-    list_display=('weather','temperature')
+    list_display=('id','weather','temperature')
     inlines=[WeatherImageInline]

@@ -20,6 +20,11 @@ class WeatherImageSerializer(ModelSerializer):
         model=WeatherImage
         fields=('id','image_url')
 
+    def create(self, validated_data):
+        weather_image= Weather(account=self.context.get('request').user,**validated_data)
+        weather_image.save()
+        return weather_image
+
 class WeatherSerializer(ModelSerializer):
     weather_images=WeatherImageSerializer(source='weather_icon',many=True ,read_only=True)
 
@@ -27,3 +32,8 @@ class WeatherSerializer(ModelSerializer):
         model=Weather
         read_only_fields=("id","createdAt","updatedAt")
         fields=("id","weather","temperature","createdAt","updatedAt","weather_images")
+
+    def create(self, validated_data):
+        weather= Weather(account=self.context.get('request').user,**validated_data)
+        weather.save()
+        return weather
